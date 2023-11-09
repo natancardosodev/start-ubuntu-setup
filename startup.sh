@@ -64,6 +64,28 @@ ssh-add ~/.ssh/id_rsa
 eval "$(ssh-agent -s)"
 cat ~/.ssh/id_rsa.pub | xclip -selection clipboard
 
+echo 'installing nvm'
+sh -c "$(curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.39.1/install.sh | bash)"
+
+export NVM_DIR="$HOME/.nvm" && (
+  git clone https://github.com/creationix/nvm.git "$NVM_DIR"
+  cd "$NVM_DIR"
+  git checkout $(git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1))
+) && \. "$NVM_DIR/nvm.sh"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+source ~/.zshrc
+nvm --version
+nvm install 14
+nvm alias default 14
+node --version
+npm --version
+
+echo 'installing @angular/cli'
+npm i -g @angular/cli@12
+
 echo "Instalando zsh"
 sudo apt-get install zsh -y
 sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
@@ -75,6 +97,15 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosugges
 echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >>~/.zshrc
 echo "export alias pbcopy='xclip -selection clipboard'" >>~/.zshrc
 echo "export alias pbpaste='xclip -selection clipboard -o'" >>~/.zshrc
+echo "alias zshrc='sudo gedit ~/.zshrc'" >>~/.zshrc
+echo "alias master='git reset --hard && git checkout master && git pull upstream master && git push origin HEAD'" >>~/.zshrc
+echo "alias cleanRam='sudo sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches''" >>~/.zshrc
+echo "alias duWww='du -hd 1 /www/'" >>~/.zshrc
+echo "export NVM_DIR='$HOME/.nvm'" >>~/.zshrc
+echo "[ -s '$NVM_DIR/nvm.sh' ] && \. '$NVM_DIR/nvm.sh'" >>~/.zshrc
+echo "[ -s '$NVM_DIR/bash_completion' ] && \. '$NVM_DIR/bash_completion'" >>~/.zshrc
+echo "[ -s '$NVM_DIR/bash_completion' ] && \. '$NVM_DIR/bash_completion'" >>~/.zshrc
+
 source ~/.zshrc
 
 echo "Instalando theme"
@@ -132,28 +163,6 @@ snap install spotify
 echo 'installing chrome'
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
-
-echo 'installing nvm'
-sh -c "$(curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.39.1/install.sh | bash)"
-
-export NVM_DIR="$HOME/.nvm" && (
-  git clone https://github.com/creationix/nvm.git "$NVM_DIR"
-  cd "$NVM_DIR"
-  git checkout $(git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1))
-) && \. "$NVM_DIR/nvm.sh"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-source ~/.zshrc
-nvm --version
-nvm install 14
-nvm alias default 14
-node --version
-npm --version
-
-echo 'installing @angular/cli'
-npm i -g @angular/cli@12
 
 echo 'installing flameshot'
 apt install flameshot
