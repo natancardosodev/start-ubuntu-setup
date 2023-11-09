@@ -99,12 +99,12 @@ echo "export alias pbcopy='xclip -selection clipboard'" >>~/.zshrc
 echo "export alias pbpaste='xclip -selection clipboard -o'" >>~/.zshrc
 echo "alias zshrc='sudo gedit ~/.zshrc'" >>~/.zshrc
 echo "alias master='git reset --hard && git checkout master && git pull upstream master && git push origin HEAD'" >>~/.zshrc
-echo "alias cleanRam='sudo sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches''" >>~/.zshrc
 echo "alias duWww='du -hd 1 /www/'" >>~/.zshrc
-echo "export NVM_DIR='$HOME/.nvm'" >>~/.zshrc
-echo "[ -s '$NVM_DIR/nvm.sh' ] && \. '$NVM_DIR/nvm.sh'" >>~/.zshrc
-echo "[ -s '$NVM_DIR/bash_completion' ] && \. '$NVM_DIR/bash_completion'" >>~/.zshrc
-echo "[ -s '$NVM_DIR/bash_completion' ] && \. '$NVM_DIR/bash_completion'" >>~/.zshrc
+echo " " >>~/.zshrc
+echo 'export NVM_DIR="$HOME/.nvm"' >>~/.zshrc
+echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >>~/.zshrc  # This loads nvm
+echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >>~/.zshrc  # This loads nvm bash_completion
+echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >>~/.zshrc  # This loads nvm bash_completion
 
 source ~/.zshrc
 
@@ -120,6 +120,10 @@ echo 'installing gedit'
 sudo apt install gedit -y
 clear
 
+echo 'installing brave'
+sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
 echo 'installing code'
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >microsoft.gpg
 sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
@@ -127,6 +131,7 @@ sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode s
 sudo apt-get install apt-transport-https -y
 sudo apt-get update
 sudo apt-get install code -y # or code-insiders
+sudo apt install brave-browser
 
 echo 'installing extensions'
 code --install-extension Angular.ng-template
@@ -241,13 +246,6 @@ session-manager-plugin --version
 echo 'installing teamviewer'
 wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
 sudo apt install -y ./teamviewer_amd64.deb
-
-echo 'installing brave'
-curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
-source /etc/os-release
-echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ $UBUNTU_CODENAME main" | sudo tee /etc/apt/sources.list.d/brave-browser-release-${UBUNTU_CODENAME}.list
-sudo apt update
-sudo apt install brave-keyring brave-browser
 
 echo 'installing dbeaver'
 wget -c https://dbeaver.io/files/6.0.0/dbeaver-ce_6.0.0_amd64.deb
