@@ -123,6 +123,9 @@ code --install-extension WakaTime.vscode-wakatime
 code --install-extension WallabyJs.quokka-vscode
 code --install-extension yzhang.markdown-all-in-one
 
+echo 'definindo configurações locais do VS Code'
+cp settings.json /home/$USER/.config/Code/User
+
 echo 'installing spotify'
 snap install spotify
 

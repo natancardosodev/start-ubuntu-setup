@@ -1,0 +1,22 @@
+{
+  "workbench.iconTheme": "vscode-icons",
+  "explorer.compactFolders": false,
+  "workbench.editor.wrapTabs": true,
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "vsicons.dontShowNewVersionMessage": true,
+  "editor.mouseWheelZoom": true,
+  "security.workspace.trust.untrustedFiles": "open",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "window.zoomLevel": 1,
+  "editor.formatOnSave": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "json.schemaDownload.enable": true,
+  "editor.codeActionsOnSave": {},
+  "extensions.ignoreRecommendations": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "explorer.confirmDelete": false,
+  "diffEditor.hideUnchangedRegions.enabled": true
+}
