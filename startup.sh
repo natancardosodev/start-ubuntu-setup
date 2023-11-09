@@ -25,24 +25,6 @@ sudo apt-get install sublime-text
 sudo apt-get install anydesk
 sudo apt-get install apt-transport-https
 
-echo "Instalando zsh"
-sudo apt-get install zsh -y
-sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-chsh -s /bin/zsh
-source ~/.zshrc
-
-echo "Instalando autosuggestions"
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >>~/.zshrc
-echo "export alias pbcopy='xclip -selection clipboard'" >>~/.zshrc
-echo "export alias pbpaste='xclip -selection clipboard -o'" >>~/.zshrc
-source ~/.zshrc
-
-echo "Instalando theme"
-sudo apt install fonts-firacode -y
-wget -O ~/.oh-my-zsh/themes/node.zsh-theme https://raw.githubusercontent.com/skuridin/oh-my-zsh-node-theme/master/node.zsh-theme
-sed -i 's/.*ZSH_THEME=.*/ZSH_THEME="node"/g' ~/.zshrc
-
 echo 'installing tool to handle clipboard via CLI'
 sudo apt-get install xclip -y
 
@@ -81,6 +63,24 @@ ssh-keygen -t rsa -b 4096 -C $git_config_user_email
 ssh-add ~/.ssh/id_rsa
 eval "$(ssh-agent -s)"
 cat ~/.ssh/id_rsa.pub | xclip -selection clipboard
+
+echo "Instalando zsh"
+sudo apt-get install zsh -y
+sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+chsh -s /bin/zsh
+source ~/.zshrc
+
+echo "Instalando autosuggestions"
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+echo "source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >>~/.zshrc
+echo "export alias pbcopy='xclip -selection clipboard'" >>~/.zshrc
+echo "export alias pbpaste='xclip -selection clipboard -o'" >>~/.zshrc
+source ~/.zshrc
+
+echo "Instalando theme"
+sudo apt install fonts-firacode -y
+wget -O ~/.oh-my-zsh/themes/node.zsh-theme https://raw.githubusercontent.com/skuridin/oh-my-zsh-node-theme/master/node.zsh-theme
+sed -i 's/.*ZSH_THEME=.*/ZSH_THEME="node"/g' ~/.zshrc
 
 echo 'enabling workspaces for both screens'
 gsettings set org.gnome.mutter workspaces-only-on-primary false
@@ -251,19 +251,25 @@ sudo php -r "unlink('composer-setup.php');"
 echo "Instalando Apache"
 sudo apt install apache2
 
-sudo apt install php7.4-fpm
-sudo a2enmod proxy_fcgi setenvif
-sudo a2enconf php7.4-fpm
-sudo a2dismod php7.4
-sudo service apache2 restart
+# sudo apt install php7.4-fpm
+# sudo a2enmod proxy_fcgi setenvif
+# sudo a2enconf php7.4-fpm
+# sudo a2dismod php7.4
+sudo systemctl restart apache2
 
-sudo service php7.4-fpm restart
+# sudo service php7.4-fpm restart
 sudo a2enmod http2
 
 sudo echo "<IfModule http2_module>" >/etc/apache2/conf-available/http2.conf
 sudo echo "Protocols h2 h2c http/1.1" >>/etc/apache2/conf-available/http2.conf
 sudo echo "H2Direct on" >>/etc/apache2/conf-available/http2.conf
 sudo echo "</IfModule>" >>/etc/apache2/conf-available/http2.conf
+sudo echo "ServerName 127.0.0.1" >>/etc/apache2/apache2.conf
 sudo a2enconf http2
 
 sudo apachectl configtest && sudo service apache2 restart
+
+echo 'Aumentando o watch do Ubuntu'
+sudo sysctl fs.inotify.max_user_instances=8192
+sudo sysctl fs.inotify.max_user_watches=524288
+sudo sysctl -p
