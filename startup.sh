@@ -28,6 +28,9 @@ source ~/.zshrc
 echo 'installing curl'
 sudo apt install curl -y
 
+echo 'installing htop'
+sudo apt install htop -y
+
 echo 'installing git'
 sudo apt install git -y
 
